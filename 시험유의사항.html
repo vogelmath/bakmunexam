@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>2026학년도 2학기 중간시험 안내</title>
+
+    <style>
+
+        /* =====================================================
+           기본 설정
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+            font-family:
+                'Malgun Gothic',
+                'Apple SD Gothic Neo',
+                sans-serif;
+        }
+
+
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            background-color: #f0f4f8;
+
+            color: #111;
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           전체 메인 컨테이너
+        ===================================================== */
+
+        .container {
+
+            width: 100vw;
+            height: 100vh;
+
+            background-color: #ffffff;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 15px 30px;
+
+            position: relative;
+        }
+
+
+        /* =====================================================
+           1단계 - 학년 선택 화면
+        ===================================================== */
+
+        #grade-select-screen {
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            width: 100vw;
+            height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3c72 0%,
+                    #2a5298 100%
+                );
+
+            color: white;
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            z-index: 100;
+        }
+
+
+        #grade-select-screen h1 {
+
+            font-size: 4rem;
+
+            margin-bottom: 20px;
+
+            font-weight: 900;
+
+            text-shadow:
+                0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+
+        #grade-select-screen p {
+
+            font-size: 1.8rem;
+
+            margin-bottom: 40px;
+
+            opacity: 0.9;
+        }
+
+
+        .grade-buttons {
+
+            display: flex;
+
+            gap: 40px;
+        }
+
+
+        .grade-btn {
+
+            padding: 25px 70px;
+
+            font-size: 2.5rem;
+
+            font-weight: bold;
+
+            border: none;
+
+            border-radius: 50px;
+
+            cursor: pointer;
+
+            background-color: #ffffff;
+
+            color: #1e3c72;
+
+            box-shadow:
+                0 8px 15px rgba(0, 0, 0, 0.3);
+
+            transition:
+                all 0.3s ease;
+        }
+
+
+        .grade-btn:hover {
+
+            background-color: #ffeb3b;
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 20px rgba(0, 0, 0, 0.4);
+        }
+
+
+        /* =====================================================
+           2단계 - 메인 화면
+        ===================================================== */
+
+        #main-screen {
+
+            display: none;
+
+            flex-direction: column;
+
+            width: 100%;
+            height: 100%;
+        }
+
+
+        /* =====================================================
+           상단 제목 영역
+        ===================================================== */
+
+        .header {
+
+            position: relative;
+
+            width: 100%;
+
+            min-height: 90px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            border-bottom:
+                4px solid #1e3c72;
+
+            flex-shrink: 0;
+        }
+
+
+        .header h2 {
+
+            font-size: 3.8rem;
+
+            color: #1e3c72;
+
+            font-weight: 900;
+
+            text-align: center;
+
+            letter-spacing: -1.5px;
+
+            line-height: 1.1;
+        }
+
+
+        /* =====================================================
+           상단 버튼
+        ===================================================== */
+
+        .top-controls {
+
+            position: absolute;
+
+            right: 0;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            display: flex;
+
+            gap: 12px;
+
+            align-items: center;
+        }
+
+
+        .btn-action {
+
+            padding: 10px 18px;
+
+            font-size: 1.1rem;
+
+            font-weight: bold;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+
+        .btn-fullscreen {
+
+            background-color: #1e3c72;
+
+            color: white;
+        }
+
+
+        .btn-fullscreen:hover {
+
+            background-color: #162c54;
+        }
+
+
+        .btn-back {
+
+            background-color: #78909c;
+
+            color: white;
+        }
+
+
+        .btn-back:hover {
+
+            background-color: #546e7a;
+        }
+
+
+        /* =====================================================
+           본문
+        ===================================================== */
+
+        .content-body {
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr 1fr;
+
+            gap: 30px;
+
+            flex: 1;
+
+            min-height: 0;
+
+            padding-top: 10px;
+
+            padding-bottom: 10px;
+        }
+
+
+        /* =====================================================
+           왼쪽 - 시험 유의사항
+        ===================================================== */
+
+        .notice-section {
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-evenly;
+
+            height: 100%;
+
+            min-height: 0;
+
+            padding-right: 5px;
+        }
+
+
+        .notice-title {
+
+            font-size: 2.1rem;
+
+            font-weight: 900;
+
+            color: #b71c1c;
+
+            text-align: center;
+
+            background-color: #ffebee;
+
+            padding: 8px;
+
+            border-radius: 7px;
+
+            margin-bottom: 2px;
+        }
+
+
+        .notice-item {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 8px;
+
+            font-size: 1.85rem;
+
+            line-height: 1.0;
+
+            font-weight: 600;
+
+            letter-spacing: -0.7px;
+        }
+
+
+        .notice-item strong {
+
+            color: #c62828;
+
+            font-weight: 900;
+
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           소지 금지 물품 박스
+        ===================================================== */
+
+        .prohibited-box {
+
+            border:
+                3px dashed #e53935;
+
+            background-color: #fff8f8;
+
+            padding: 8px 10px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            margin: 2px 0;
+        }
+
+
+        .prohibited-box .p-title {
+
+            color: #c62828;
+
+            font-size: 1.55rem;
+
+            font-weight: 900;
+
+            margin-bottom: 2px;
+        }
+
+
+        .prohibited-box .p-content {
+
+            color: #222;
+
+            font-size: 1.6rem;
+
+            font-weight: 900;
+
+            line-height: 1.0;
+        }
+
+
+        /* =====================================================
+           오른쪽 전체 영역
+
+           ★ 기존보다 아래로 이동
+        ===================================================== */
+
+        .right-section {
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: flex-start;
+
+            height: 100%;
+
+            min-height: 0;
+
+            /*
+             * 시계를 포함한 오른쪽 전체를 아래로 이동
+             */
+            padding-top: 70px;
+
+            padding-left: 5px;
+        }
+
+
+        /* =====================================================
+           시계 박스
+
+           ★ 세로 길이를 늘림
+           ★ 가로는 기존 비율 유지
+        ===================================================== */
+
+        .live-clock-container {
+
+            width: 100%;
+
+            /*
+             * 높이를 확보하기 위해
+             * 위아래 패딩 증가
+             */
+            padding: 28px 8px;
+
+            background-color: #ffebee;
+
+            border:
+                5px solid #ffcdd2;
+
+            border-radius: 18px;
+
+            text-align: center;
+
+            box-shadow:
+                0 6px 15px
+                rgba(211, 47, 47, 0.15);
+
+            flex-shrink: 0;
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           시계 숫자
+
+           ★ 숫자를 조금 넓게
+           ★ 숫자와 박스 사이 공간 감소
+        ===================================================== */
+
+        .live-clock {
+
+            font-size: 10.5rem;
+
+            font-weight: 900;
+
+            color: #d32f2f;
+
+            /*
+             * 숫자 사이 간격
+             */
+            letter-spacing: 8px;
+
+            /*
+             * 세로 공간을 효율적으로 사용
+             */
+            line-height: 0.9;
+
+            /*
+             * 숫자 자체의 가로 폭 확대
+             */
+            transform:
+                scaleX(1.08);
+
+            transform-origin: center;
+        }
+
+
+        /* =====================================================
+           시간표
+
+           ★ 시계와 표 사이 넓은 간격
+        ===================================================== */
+
+        .timetable-section {
+
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            /*
+             * 시계와 시간표 사이 간격
+             */
+            margin-top: 125px;
+
+            min-height: 0;
+        }
+
+
+        /* =====================================================
+           시간표
+        ===================================================== */
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 4px 10px
+                rgba(0, 0, 0, 0.05);
+        }
+
+
+        th,
+        td {
+
+            border:
+                2px solid #b0bec5;
+
+            text-align: center;
+
+            padding:
+                17px 10px;
+        }
+
+
+        th {
+
+            background-color: #4a90e2;
+
+            color: white;
+
+            font-size: 1.9rem;
+
+            font-weight: 900;
+        }
+
+
+        td {
+
+            background-color: #ffffff;
+
+            font-size: 1.8rem;
+
+            font-weight: bold;
+        }
+
+
+        tr:nth-child(even) td {
+
+            background-color: #f4f8fb;
+        }
+
+
+        .period-col {
+
+            width: 20%;
+
+            background-color: #e3f2fd;
+
+            color: #0d47a1;
+        }
+
+
+        .time-col {
+
+            width: 40%;
+
+            font-weight: bold;
+        }
+
+
+        .subject-col {
+
+            width: 25%;
+
+            color: #111;
+        }
+
+
+        .code-col {
+
+            width: 15%;
+
+            color: #d32f2f;
+
+            font-size: 2.1rem;
+        }
+
+
+        /* =====================================================
+           화면 높이가 낮은 경우
+        ===================================================== */
+
+        @media (max-height: 800px) {
+
+
+            .header {
+
+                min-height: 65px;
+            }
+
+
+            .header h2 {
+
+                font-size: 2.8rem;
+            }
+
+
+            .notice-item {
+
+                font-size: 1.6rem;
+
+                line-height: 0.98;
+            }
+
+
+            .notice-title {
+
+                font-size: 1.7rem;
+            }
+
+
+            .prohibited-box .p-content {
+
+                font-size: 1.4rem;
+            }
+
+
+            /* 오른쪽 영역 */
+
+            .right-section {
+
+                padding-top: 45px;
+            }
+
+
+            /* 시계 */
+
+            .live-clock-container {
+
+                padding:
+                    22px 8px;
+            }
+
+
+            .live-clock {
+
+                font-size: 8.5rem;
+
+                letter-spacing: 7px;
+
+                transform:
+                    scaleX(1.08);
+            }
+
+
+            /* 시계와 표 사이 */
+
+            .timetable-section {
+
+                margin-top: 80px;
+            }
+
+
+            th {
+
+                font-size: 1.5rem;
+
+                padding:
+                    10px 6px;
+            }
+
+
+            td {
+
+                font-size: 1.45rem;
+
+                padding:
+                    10px 6px;
+            }
+
+
+            .code-col {
+
+                font-size: 1.7rem;
+            }
+
+        }
+
+
+        /* =====================================================
+           대형 모니터
+        ===================================================== */
+
+        @media (min-width: 1800px) {
+
+
+            .header {
+
+                min-height: 95px;
+            }
+
+
+            .header h2 {
+
+                font-size: 4rem;
+            }
+
+
+            .notice-item {
+
+                font-size: 2rem;
+            }
+
+
+            .notice-title {
+
+                font-size: 2.1rem;
+            }
+
+
+            .prohibited-box .p-content {
+
+                font-size: 1.75rem;
+            }
+
+
+            .right-section {
+
+                padding-top: 90px;
+            }
+
+
+            .live-clock-container {
+
+                padding:
+                    32px 10px;
+            }
+
+
+            .live-clock {
+
+                font-size: 11rem;
+
+                letter-spacing: 9px;
+
+                transform:
+                    scaleX(1.08);
+            }
+
+
+            .timetable-section {
+
+                margin-top: 140px;
+            }
+
+
+            th {
+
+                font-size: 2rem;
+            }
+
+
+            td {
+
+                font-size: 1.9rem;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         1단계 - 학년 선택 화면
+    ===================================================== -->
+
+    <div id="grade-select-screen">
+
+        <h1>
+            2026학년도 2학기 중간시험
+        </h1>
+
+        <p>
+            응시할 학년을 선택해 주세요.
+        </p>
+
+        <div class="grade-buttons">
+
+            <button
+                class="grade-btn"
+                onclick="selectGrade(1)"
+            >
+                1학년
+            </button>
+
+            <button
+                class="grade-btn"
+                onclick="selectGrade(2)"
+            >
+                2학년
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         2단계 - 메인 시험 안내 화면
+    ===================================================== -->
+
+    <div
+        id="main-screen"
+        class="container"
+    >
+
+
+        <!-- =================================================
+             제목
+        ================================================= -->
+
+        <div class="header">
+
+            <h2 id="main-title">
+                2026학년도 2학기 중간시험
+            </h2>
+
+
+            <div class="top-controls">
+
+                <button
+                    class="btn-action btn-back"
+                    onclick="goBack()"
+                >
+                    학년 선택
+                </button>
+
+
+                <button
+                    class="btn-action btn-fullscreen"
+                    onclick="toggleFullScreen()"
+                >
+                    전체화면
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             본문
+        ================================================= -->
+
+        <div class="content-body">
+
+
+            <!-- =================================================
+                 왼쪽 - 시험 유의사항
+            ================================================= -->
+
+            <div class="notice-section">
+
+
+                <div class="notice-title">
+                    【 시험 시 학생 유의사항 】
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>※</span>
+
+                    <span>
+                        학생 준비물 :
+                        <strong>
+                            컴퓨터용 수성싸인펜,
+                            검정 볼펜,
+                            개인용 수정테이프
+                        </strong>
+                    </span>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>○</span>
+
+                    <span>
+                        매 교시 시험 종료 전에
+                        교실 밖으로 나가서는 안 된다.
+                    </span>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>○</span>
+
+                    <span>
+                        시험 당일 아래 물품은 소지 금지,
+                        소지 시 시험 전 담임교사에게 제출.
+                    </span>
+
+                </div>
+
+
+                <!-- 소지 금지 물품 -->
+
+                <div class="prohibited-box">
+
+                    <div class="p-title">
+                        &lt; 소지 금지 물품 &gt;
+                    </div>
+
+                    <div class="p-content">
+                        휴대용 전화기,
+                        스마트 기기(스마트 워치 등),
+                        모든 전자기기
+                    </div>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>○</span>
+
+                    <span>
+                        시험 시작 전,
+                        책상 위 및 서랍 속 불필요한
+                        모든 것을 정리한다.
+                    </span>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>○</span>
+
+                    <span>
+                        <strong>
+                            시험 실시 도중에 질문이 있을 경우
+                            조용히 손을 든다.
+                        </strong>
+                    </span>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>○</span>
+
+                    <span>
+                        답안지 수령 후 인적사항 기입 후,
+                        필기구를 내려 놓는다.
+                    </span>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>○</span>
+
+                    <span>
+                        OMR 답안지를 접거나 훼손하지 않는다.
+                    </span>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>○</span>
+
+                    <span>
+                        반드시
+                        <strong>
+                            컴퓨터용 수성 사인펜
+                        </strong>
+                        으로 표기한다.
+                    </span>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <span>○</span>
+
+                    <span>
+                        답 수정 시
+                        <strong>
+                            흰색 수정테이프
+                        </strong>
+                        를 사용할 수 있다.
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 오른쪽 - 시계 + 시간표
+            ================================================= -->
+
+            <div class="right-section">
+
+
+                <!-- =================================================
+                     실시간 시계
+                ================================================= -->
+
+                <div class="live-clock-container">
+
+                    <div
+                        class="live-clock"
+                        id="clock"
+                    >
+                        00:00
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     시험 시간표
+                ================================================= -->
+
+                <div class="timetable-section">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    교시
+                                </th>
+
+                                <th>
+                                    시험 시간
+                                </th>
+
+                                <th>
+                                    과 목
+                                </th>
+
+                                <th>
+                                    과목코드
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody
+                            id="timetable-body"
+                        >
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JavaScript
+    ===================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           학년별 시험 시간표
+
+           ★ 시험 시간 수정 완료
+        ===================================================== */
+
+        const timetableData = {
+
+            1: [
+
+                {
+                    period: "1교시",
+                    time: "09:00 ~ 09:45",
+                    subject: "영어",
+                    code: "10"
+                },
+
+                {
+                    period: "2교시",
+                    time: "10:00 ~ 10:45",
+                    subject: "과학",
+                    code: "05"
+                },
+
+                {
+                    period: "3교시",
+                    time: "11:00 ~ 11:45",
+                    subject: "사회",
+                    code: "03"
+                }
+
+            ],
+
+
+            2: [
+
+                {
+                    period: "1교시",
+                    time: "09:00 ~ 09:45",
+                    subject: "영어",
+                    code: "10"
+                },
+
+                {
+                    period: "2교시",
+                    time: "10:00 ~ 10:45",
+                    subject: "과학",
+                    code: "05"
+                },
+
+                {
+                    period: "3교시",
+                    time: "11:00 ~ 11:45",
+                    subject: "사회",
+                    code: "03"
+                }
+
+            ]
+
+        };
+
+
+
+        /* =====================================================
+           학년 선택 함수
+        ===================================================== */
+
+        function selectGrade(grade) {
+
+
+            const selectScreen =
+                document.getElementById(
+                    'grade-select-screen'
+                );
+
+
+            const mainScreen =
+                document.getElementById(
+                    'main-screen'
+                );
+
+
+            const mainTitle =
+                document.getElementById(
+                    'main-title'
+                );
+
+
+            const tbody =
+                document.getElementById(
+                    'timetable-body'
+                );
+
+
+            /*
+             * 제목 변경
+             */
+
+            mainTitle.innerText =
+                `2026학년도 2학기 중간시험 [ ${grade}학년 ]`;
+
+
+            /*
+             * 기존 표 초기화
+             */
+
+            tbody.innerHTML = "";
+
+
+            /*
+             * 시간표 생성
+             */
+
+            timetableData[grade].forEach(
+                item => {
+
+
+                    const row =
+                        document.createElement('tr');
+
+
+                    row.innerHTML = `
+
+                        <td class="period-col">
+                            ${item.period}
+                        </td>
+
+                        <td class="time-col">
+                            ${item.time}
+                        </td>
+
+                        <td class="subject-col">
+                            ${item.subject}
+                        </td>
+
+                        <td class="code-col">
+                            ${item.code}
+                        </td>
+
+                    `;
+
+
+                    tbody.appendChild(row);
+
+                }
+            );
+
+
+            /*
+             * 학년 선택 화면 숨기기
+             */
+
+            selectScreen.style.display =
+                'none';
+
+
+            /*
+             * 메인 화면 표시
+             */
+
+            mainScreen.style.display =
+                'flex';
+
+
+            /*
+             * 전체화면 진입
+             */
+
+            enterFullScreen();
+
+        }
+
+
+
+        /* =====================================================
+           학년 선택 화면으로 돌아가기
+        ===================================================== */
+
+        function goBack() {
+
+
+            document.getElementById(
+                'main-screen'
+            ).style.display =
+                'none';
+
+
+            document.getElementById(
+                'grade-select-screen'
+            ).style.display =
+                'flex';
+
+
+            exitFullScreen();
+
+        }
+
+
+
+        /* =====================================================
+           실시간 시계
+        ===================================================== */
+
+        function updateClock() {
+
+
+            const now =
+                new Date();
+
+
+            const hours =
+                String(
+                    now.getHours()
+                ).padStart(2, '0');
+
+
+            const minutes =
+                String(
+                    now.getMinutes()
+                ).padStart(2, '0');
+
+
+            document.getElementById(
+                'clock'
+            ).innerText =
+                `${hours}:${minutes}`;
+
+        }
+
+
+        /*
+         * 1초마다 시계 업데이트
+         */
+
+        setInterval(
+            updateClock,
+            1000
+        );
+
+
+        /*
+         * 처음 실행
+         */
+
+        updateClock();
+
+
+
+        /* =====================================================
+           전체화면 진입
+        ===================================================== */
+
+        function enterFullScreen() {
+
+
+            const elem =
+                document.documentElement;
+
+
+            if (elem.requestFullscreen) {
+
+                elem.requestFullscreen()
+                    .catch(
+                        err => {
+
+                            console.log(
+                                "전체화면 전환 거부됨"
+                            );
+
+                        }
+                    );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           전체화면 종료
+        ===================================================== */
+
+        function exitFullScreen() {
+
+
+            if (
+                document.fullscreenElement
+            ) {
+
+                document.exitFullscreen();
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           전체화면 토글
+        ===================================================== */
+
+        function toggleFullScreen() {
+
+
+            if (
+                !document.fullscreenElement
+            ) {
+
+                enterFullScreen();
+
+            } else {
+
+                exitFullScreen();
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
