@@ -61,9 +61,65 @@
            1단계 - 학년 선택 화면
         ===================================================== */
 
-        #grade-select-screen {
+        #day-select-screen {
 
             display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            width: 100vw;
+
+            height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3c72 0%,
+                    #2a5298 100%
+                );
+
+            color: white;
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            z-index: 200;
+        }
+
+
+        #day-select-screen h1 {
+
+            font-size: 4rem;
+
+            margin-bottom: 20px;
+
+            font-weight: 900;
+
+            text-shadow:
+                0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+
+        #day-select-screen p {
+
+            font-size: 1.8rem;
+
+            margin-bottom: 40px;
+
+            opacity: 0.9;
+        }
+
+
+        #grade-select-screen {
+
+            display: none;
 
             flex-direction: column;
 
@@ -146,6 +202,20 @@
 
             transition:
                 all 0.3s ease;
+        }
+
+
+        .day-date {
+
+            display: block;
+
+            margin-top: 8px;
+
+            font-size: 1.35rem;
+
+            font-weight: 700;
+
+            color: #546e7a;
         }
 
 
@@ -826,7 +896,44 @@
 
 
     <!-- =====================================================
-         1단계 - 학년 선택 화면
+         1단계 - 시험일 선택 화면
+    ===================================================== -->
+
+    <div id="day-select-screen">
+
+        <h1>
+            2026학년도 2학기 중간시험
+        </h1>
+
+        <p>
+            시험일을 선택해 주세요.
+        </p>
+
+        <div class="grade-buttons">
+
+            <button
+                class="grade-btn"
+                onclick="selectDay(1)"
+            >
+                1일차
+                <span class="day-date">10월 6일</span>
+            </button>
+
+            <button
+                class="grade-btn"
+                onclick="selectDay(2)"
+            >
+                2일차
+                <span class="day-date">10월 7일</span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         2단계 - 학년 선택 화면
     ===================================================== -->
 
     <div id="grade-select-screen">
@@ -835,8 +942,8 @@
             2026학년도 2학기 중간시험
         </h1>
 
-        <p>
-            응시할 학년을 선택해 주세요.
+        <p id="grade-select-date">
+            시험 학년을 선택해 주세요.
         </p>
 
         <div class="grade-buttons">
@@ -857,12 +964,20 @@
 
         </div>
 
+        <button
+            class="btn-action btn-back"
+            style="margin-top: 30px; font-size: 1.2rem;"
+            onclick="goToDaySelect()"
+        >
+            시험일 다시 선택
+        </button>
+
     </div>
 
 
 
     <!-- =====================================================
-         2단계 - 메인 시험 안내 화면
+         3단계 - 메인 시험 안내 화면
     ===================================================== -->
 
     <div
@@ -974,7 +1089,7 @@
 
                     <div class="p-content">
                         휴대용 전화기,
-                        스마트 기기(스마트 워치 등),
+                        스마트 기기(스마트 워치, AI스마트 안경  등),
                         모든 전자기기
                     </div>
 
@@ -1157,58 +1272,149 @@
 
         const timetableData = {
 
-            1: [
+            // 1일차 - 기존 시간표
+            1: {
 
-                {
-                    period: "1교시",
-                    time: "09:00 ~ 09:45",
-                    subject: "영어",
-                    code: "10"
-                },
+                1: [
+                    {
+                        period: "1교시",
+                        time: "09:00 ~ 09:45",
+                        subject: "영어",
+                        code: "10"
+                    },
+                    {
+                        period: "2교시",
+                        time: "10:00 ~ 10:45",
+                        subject: "과학",
+                        code: "05"
+                    },
+                    {
+                        period: "3교시",
+                        time: "11:00 ~ 11:45",
+                        subject: "사회",
+                        code: "03"
+                    }
+                ],
 
-                {
-                    period: "2교시",
-                    time: "10:00 ~ 10:45",
-                    subject: "과학",
-                    code: "05"
-                },
+                2: [
+                    {
+                        period: "1교시",
+                        time: "09:00 ~ 09:45",
+                        subject: "영어",
+                        code: "10"
+                    },
+                    {
+                        period: "2교시",
+                        time: "10:00 ~ 10:45",
+                        subject: "과학",
+                        code: "05"
+                    },
+                    {
+                        period: "3교시",
+                        time: "11:00 ~ 11:45",
+                        subject: "사회",
+                        code: "03"
+                    }
+                ]
 
-                {
-                    period: "3교시",
-                    time: "11:00 ~ 11:45",
-                    subject: "사회",
-                    code: "03"
-                }
-
-            ],
+            },
 
 
-            2: [
+            // 2일차 - 학년별 시간표
+            2: {
 
-                {
-                    period: "1교시",
-                    time: "09:00 ~ 09:45",
-                    subject: "영어",
-                    code: "10"
-                },
+                1: [
+                    {
+                        period: "1교시",
+                        time: "09:00 ~ 09:45",
+                        subject: "자습",
+                        code: ""
+                    },
+                    {
+                        period: "2교시",
+                        time: "10:00 ~ 10:45",
+                        subject: "수학",
+                        code: "04"
+                    },
+                    {
+                        period: "3교시",
+                        time: "11:00 ~ 11:45",
+                        subject: "국어",
+                        code: "01"
+                    }
+                ],
 
-                {
-                    period: "2교시",
-                    time: "10:00 ~ 10:45",
-                    subject: "과학",
-                    code: "05"
-                },
+                2: [
+                    {
+                        period: "1교시",
+                        time: "09:00 ~ 09:45",
+                        subject: "도덕",
+                        code: "02"
+                    },
+                    {
+                        period: "2교시",
+                        time: "10:00 ~ 10:45",
+                        subject: "수학",
+                        code: "04"
+                    },
+                    {
+                        period: "3교시",
+                        time: "11:00 ~ 11:45",
+                        subject: "국어",
+                        code: "01"
+                    }
+                ]
 
-                {
-                    period: "3교시",
-                    time: "11:00 ~ 11:45",
-                    subject: "사회",
-                    code: "03"
-                }
-
-            ]
+            }
 
         };
+
+
+        /* =====================================================
+           시험일 선택
+        ===================================================== */
+
+        let selectedDay = 1;
+
+        const dayInfo = {
+            1: {
+                label: "1일차",
+                date: "10월 6일"
+            },
+            2: {
+                label: "2일차",
+                date: "10월 7일"
+            }
+        };
+
+
+        function selectDay(day) {
+
+            selectedDay = day;
+
+            const dayScreen =
+                document.getElementById(
+                    'day-select-screen'
+                );
+
+            const gradeScreen =
+                document.getElementById(
+                    'grade-select-screen'
+                );
+
+            const gradeDate =
+                document.getElementById(
+                    'grade-select-date'
+                );
+
+            gradeDate.innerText =
+                `${dayInfo[day].label} · ${dayInfo[day].date} - 시험 학년을 선택해 주세요.`;
+
+            dayScreen.style.display = 'none';
+
+            gradeScreen.style.display = 'flex';
+
+        }
 
 
 
@@ -1218,24 +1424,20 @@
 
         function selectGrade(grade) {
 
-
-            const selectScreen =
+            const gradeScreen =
                 document.getElementById(
                     'grade-select-screen'
                 );
-
 
             const mainScreen =
                 document.getElementById(
                     'main-screen'
                 );
 
-
             const mainTitle =
                 document.getElementById(
                     'main-title'
                 );
-
 
             const tbody =
                 document.getElementById(
@@ -1250,7 +1452,6 @@
             mainTitle.innerText =
                 `2026학년도 2학기 중간시험 [ ${grade}학년 ]`;
 
-
             /*
              * 기존 표 초기화
              */
@@ -1259,16 +1460,14 @@
 
 
             /*
-             * 시간표 생성
+             * 선택한 시험일 + 학년의 시간표 생성
              */
 
-            timetableData[grade].forEach(
+            timetableData[selectedDay][grade].forEach(
                 item => {
-
 
                     const row =
                         document.createElement('tr');
-
 
                     row.innerHTML = `
 
@@ -1290,7 +1489,6 @@
 
                     `;
 
-
                     tbody.appendChild(row);
 
                 }
@@ -1301,7 +1499,7 @@
              * 학년 선택 화면 숨기기
              */
 
-            selectScreen.style.display =
+            gradeScreen.style.display =
                 'none';
 
 
@@ -1329,20 +1527,37 @@
 
         function goBack() {
 
-
             document.getElementById(
                 'main-screen'
             ).style.display =
                 'none';
-
 
             document.getElementById(
                 'grade-select-screen'
             ).style.display =
                 'flex';
 
-
             exitFullScreen();
+
+        }
+
+
+
+        /* =====================================================
+           시험일 선택 화면으로 돌아가기
+        ===================================================== */
+
+        function goToDaySelect() {
+
+            document.getElementById(
+                'grade-select-screen'
+            ).style.display =
+                'none';
+
+            document.getElementById(
+                'day-select-screen'
+            ).style.display =
+                'flex';
 
         }
 
