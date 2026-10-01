@@ -1567,37 +1567,173 @@
            실시간 시계
         ===================================================== */
 
-        function updateClock() {
+        /* =====================================================
+           대한민국 표준시(KST) 인터넷 시간 동기화
+
+           - 인터넷의 Asia/Seoul 시간을 기준으로 사용
+           - 기기의 날짜/시간 설정과 무관
+           - 처음 동기화한 뒤 실제 경과시간으로 계속 진행
+           - 5분마다 다시 인터넷 시간과 동기화
+        ===================================================== */
+
+        let standardTimeMs = null;
+        let syncPerformanceMs = null;
+        let clockSyncOK = false;
 
 
-            const now =
-                new Date();
+        async function syncKoreanStandardTime() {
 
+            /*
+             * WorldTimeAPI의 Asia/Seoul 응답은
+             * +09:00 오프셋이 포함된 ISO 시간(datetime)을 제공한다.
+             */
+            const endpoints = [
+                'https://worldtimeapi.org/api/timezone/Asia/Seoul',
+                'https://timeapi.io/api/Time/current/zone?timeZone=Asia/Seoul'
+            ];
 
-            const hours =
-                String(
-                    now.getHours()
-                ).padStart(2, '0');
+            for (const url of endpoints) {
 
+                try {
 
-            const minutes =
-                String(
-                    now.getMinutes()
-                ).padStart(2, '0');
+                    const controller =
+                        new AbortController();
 
+                    const timeoutId =
+                        setTimeout(
+                            () => controller.abort(),
+                            5000
+                        );
+
+                    const response =
+                        await fetch(
+                            url,
+                            {
+                                cache: 'no-store',
+                                signal: controller.signal
+                            }
+                        );
+
+                    clearTimeout(timeoutId);
+
+                    if (!response.ok) {
+                        continue;
+                    }
+
+                    const data =
+                        await response.json();
+
+                    const timeText =
+                        data.datetime ||
+                        data.dateTime;
+
+                    if (!timeText) {
+                        continue;
+                    }
+
+                    const parsedTime =
+                        Date.parse(timeText);
+
+                    if (Number.isNaN(parsedTime)) {
+                        continue;
+                    }
+
+                    /*
+                     * 서버가 알려준 정확한 순간을 저장한다.
+                     * 이후에는 performance.now()의 경과시간을 더한다.
+                     */
+                    standardTimeMs =
+                        parsedTime;
+
+                    syncPerformanceMs =
+                        performance.now();
+
+                    clockSyncOK = true;
+
+                    updateClock();
+
+                    console.log(
+                        '대한민국 표준시 동기화 완료:',
+                        timeText
+                    );
+
+                    return;
+
+                } catch (error) {
+
+                    console.warn(
+                        '시간 서버 연결 실패:',
+                        url,
+                        error
+                    );
+                }
+            }
+
+            clockSyncOK = false;
 
             document.getElementById(
                 'clock'
-            ).innerText =
-                `${hours}:${minutes}`;
+            ).innerText = '--:--';
 
+            console.warn(
+                '인터넷 표준시 서버에 연결할 수 없습니다.'
+            );
+        }
+
+
+        function updateClock() {
+
+            const clock =
+                document.getElementById('clock');
+
+            if (
+                !clockSyncOK ||
+                standardTimeMs === null ||
+                syncPerformanceMs === null
+            ) {
+                clock.innerText = '--:--';
+                return;
+            }
+
+            /*
+             * 인터넷에서 동기화한 시각 + 실제 경과시간
+             */
+            const currentMs =
+                standardTimeMs +
+                (
+                    performance.now() -
+                    syncPerformanceMs
+                );
+
+            /*
+             * 핵심 수정:
+             *
+             * getUTCHours()를 사용하면 한국 표준시가
+             * 다시 UTC로 표시되는 문제가 생긴다.
+             *
+             * 따라서 반드시 Asia/Seoul 시간대로 표시한다.
+             */
+            const formatter =
+                new Intl.DateTimeFormat(
+                    'ko-KR',
+                    {
+                        timeZone: 'Asia/Seoul',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    }
+                );
+
+            clock.innerText =
+                formatter.format(
+                    new Date(currentMs)
+                );
         }
 
 
         /*
          * 1초마다 시계 업데이트
          */
-
         setInterval(
             updateClock,
             1000
@@ -1605,10 +1741,18 @@
 
 
         /*
-         * 처음 실행
+         * 5분마다 인터넷 표준시와 재동기화
          */
+        setInterval(
+            syncKoreanStandardTime,
+            5 * 60 * 1000
+        );
 
-        updateClock();
+
+        /*
+         * 처음 실행할 때 인터넷 표준시와 동기화
+         */
+        syncKoreanStandardTime();
 
 
 
